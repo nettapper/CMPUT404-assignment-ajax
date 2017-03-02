@@ -17,3 +17,4 @@ Code in server.py by the Stack Overflow user 'atupal' is licensed under [CC-BY-S
 Resources Used
 ==============
 - [Flask API - Make Response](http://flask.pocoo.org/docs/0.12/api/#flask.Flask.make_response), accessed Mar 2, 2017.
+- [Flask API - Response](http://flask.pocoo.org/docs/0.12/api/#response-objects), accessed Mar 2, 2017.

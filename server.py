@@ -22,7 +22,7 @@
 
 
 import flask
-from flask import Flask, request
+from flask import Flask, request, make_response
 import json
 app = Flask(__name__)
 app.debug = True
@@ -93,7 +93,10 @@ def update(entity):
 @app.route("/world", methods=['POST','GET'])
 def world():
     '''you should probably return the world here'''
-    return None
+    print((myWorld.world()))
+    myWorldJsonString = str(json.dumps(myWorld.world()))
+    response = make_response(myWorldJsonString)
+    return response
 
 @app.route("/entity/<entity>")
 def get_entity(entity):

@@ -54,11 +54,11 @@
    - [ ] Make static/index.html images look nice
    - [ ] implement anything marked XXX TODO: in static/index.html
    - [ ] /clear returns the current state of the world {}
-   - [ ] PUT returns the object that was PUT. 
+   - [ ] PUT returns the object that was PUT.
    - [ ] http://hostname:5000/static/index.html will work to produce the UI
          (so http://127.0.0.1:5000/static/index.html should work and http://localhost:5000/static/index.html should work)
 
- 
+
 ** Restrictions
    - [ ] Use Python 2.7
    - [ ] Must run in the undergrad lab (Ubuntu 12.04)
@@ -81,7 +81,7 @@
      python freetests.py
 
    - Marks will be deducted if I cannot successfully do this.
-     
+
    - Marks will be deducted for using library code that does the assignment
 
 ** Marking
@@ -89,4 +89,4 @@
    - 1 mark for passing not-free-tests.py
    - 2 marks for being usable in the browser
    - 1 mark for looking better than what I gave you
-     
+

@@ -27,6 +27,12 @@ import json
 app = Flask(__name__)
 app.debug = True
 
+# Accessed on Mar 2, 2017
+# Written by atupal (http://stackoverflow.com/users/2226698/atupal) on Stack Overflow http://stackoverflow.com/questions/20646822/how-to-serve-static-files-in-flask#20648053
+# set the project root directory as the static folder, you can set others.
+app = Flask(__name__, static_url_path='')
+# End of code by atupal
+
 # An example world
 # {
 #    'a':{'x':1, 'y':2},
@@ -74,7 +80,10 @@ def flask_post_json():
 @app.route("/")
 def hello():
     '''Return something coherent here.. perhaps redirect to /static/index.html '''
-    return None
+    # Accessed on Mar 2, 2017
+    # Written by atupal (http://stackoverflow.com/users/2226698/atupal) on Stack Overflow http://stackoverflow.com/questions/20646822/how-to-serve-static-files-in-flask#20648053
+    return app.send_static_file('index.html')
+    # End of code by atupal
 
 @app.route("/entity/<entity>", methods=['POST','PUT'])
 def update(entity):

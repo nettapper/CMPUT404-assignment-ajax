@@ -38,6 +38,7 @@ app = Flask(__name__, static_url_path='')
 #    'a':{'x':1, 'y':2},
 #    'b':{'x':2, 'y':3}
 # }
+# curl -v -H "Content-Type: appication/json" -X POST http://127.0.0.1:5000/world -d '{ "a":{"x":1, "y":2}, "b":{"x":2, "y":3} }'
 
 class World:
     def __init__(self):
@@ -90,11 +91,21 @@ def update(entity):
     '''update the entities via this interface'''
     return None
 
+@app.route("/entity/<entity>")
+def get_entity(entity):
+    '''This is the GET version of the entity interface, return a representation of the entity'''
+    return None
+
 @app.route("/world", methods=['POST','GET'])
 def world():
     '''you should probably return the world here'''
-    # TODO: handle POST too!
-    response = get_world_response()
+    # print("Method", request.method)
+    if request.method == "GET":
+        response = get_world_response()
+    elif request.method == "POST":
+        response = post_world_response()
+    else:
+        response = None
     return response
 
 def get_world_response():
@@ -104,10 +115,24 @@ def get_world_response():
     # print(response)
     return response
 
-@app.route("/entity/<entity>")
-def get_entity(entity):
-    '''This is the GET version of the entity interface, return a representation of the entity'''
-    return None
+def post_world_response():
+    if tryToUpdateAll(flask_post_json()):
+        return get_world_response()
+    else:
+        return Response(status=400)
+
+def tryToUpdateAll(entityKeyDict):
+    if type(entityKeyDict) != type(dict({})):
+        return False
+    else:
+        for entity in entityKeyDict.keys():
+            if type(entityKeyDict[entity]) != type(dict({})):
+                return False
+            else:
+                for key in entityKeyDict[entity].keys():
+                    # print entity, key, entityKeyDict[entity][key]
+                    myWorld.update(entity, key, entityKeyDict[entity][key])
+        return True
 
 @app.route("/clear", methods=['POST','GET'])
 def clear():

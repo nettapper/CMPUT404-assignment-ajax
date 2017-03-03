@@ -69,14 +69,21 @@ myWorld = World()
 # I give this to you, this is how you get the raw body/data portion of a post in flask
 # this should come with flask but whatever, it's not my project.
 def flask_post_json():
+    # TODO more testing w/ this parsing function
+    # print "request.json", request.json
+    # print "request.data", request.data
+    # print "request.form", request.form
+    # print "request.form.keys()", request.form.keys()
     '''Ah the joys of frameworks! They do so much work for you
        that they get in the way of sane operation!'''
     if (request.json != None):
         return request.json
     elif (request.data != None and request.data != ''):
         return json.loads(request.data)
-    else:
+    elif (request.form != None and len(request.form.keys()) > 0):
         return json.loads(request.form.keys()[0])
+    else:
+        return dict({})
 
 @app.route("/")
 def hello():
@@ -109,13 +116,13 @@ def world():
     elif request.method == "POST":
         response = post_world_response()
     else:
-        response = None
+        response = Response(status=400)
     return response
 
 def get_world_response():
     # print((myWorld.world()))
     myWorldJsonString = str(json.dumps(myWorld.world()))
-    response = Response(response=myWorldJsonString, mimetype="application/json")
+    response = Response(response=myWorldJsonString, mimetype="application/json", status=200)
     # print(response)
     return response
 
@@ -142,7 +149,21 @@ def tryToUpdateAll(entityKeyDict):
 def clear():
     '''Clear the world out!'''
     # TODO: impliment this route
-    return None
+    if request.method == "GET":
+        response = get_clear_world_response()
+    elif request.method == "POST":
+        response = post_clear_world_response()
+    else:
+        response = Response(status=400)
+    return response
+
+def get_clear_world_response():
+    myWorld.clear()
+    return get_world_response()
+
+def post_clear_world_response():
+    myWorld.clear()
+    return post_world_response()
 
 if __name__ == "__main__":
     app.run()

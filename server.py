@@ -95,8 +95,10 @@ def update(entity):
 @app.route("/entity/<entity>")
 def get_entity(entity):
     '''This is the GET version of the entity interface, return a representation of the entity'''
-    # TODO: impliment this route
-    return None
+    entityJsonString = str(json.dumps(myWorld.get(entity)))
+    print entityJsonString
+    response = Response(response=entityJsonString, mimetype="application/json")
+    return response
 
 @app.route("/world", methods=['POST','GET'])
 def world():

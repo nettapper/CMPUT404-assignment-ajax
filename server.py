@@ -74,6 +74,7 @@ def flask_post_json():
     # print "request.data", request.data
     # print "request.form", request.form
     # print "request.form.keys()", request.form.keys()
+    # TODO: impliment this route
     '''Ah the joys of frameworks! They do so much work for you
        that they get in the way of sane operation!'''
     if (request.json != None):
@@ -99,6 +100,7 @@ def update(entity):
     if request.method == "PUT" or request.method == "POST":
         worldDict = dict({})
         worldDict[entity] = flask_post_json()
+        # TODO: do i need to check if the entitys have an x&y field?
         if tryToUpdateAll(worldDict):
             return get_entity(entity)
         else:

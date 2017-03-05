@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-# Copyright 2013 Abram Hindle
+# Copyright 2013 Abram Hindle, Conner Dunn
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -158,7 +158,6 @@ def tryToUpdateAll(entityKeyDict):
 @app.route("/clear", methods=['POST','GET'])
 def clear():
     '''Clear the world out!'''
-    # TODO: impliment this route
     if request.method == "GET":
         response = get_clear_world_response()
     elif request.method == "POST":

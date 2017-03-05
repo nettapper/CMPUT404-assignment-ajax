@@ -96,7 +96,16 @@ def hello():
 @app.route("/entity/<entity>", methods=['POST','PUT'])
 def update(entity):
     '''update the entities via this interface'''
-    # TODO: impliment this route
+    if request.method == "PUT" or request.method == "POST":
+        worldDict = dict({})
+        worldDict[entity] = flask_post_json()
+        if tryToUpdateAll(worldDict):
+            return get_entity(entity)
+        else:
+            return Response(status=400)
+    else:
+        response = Response(status=400)
+    return response
     return None
 
 @app.route("/entity/<entity>")
@@ -132,6 +141,7 @@ def post_world_response():
     else:
         return Response(status=400)
 
+# Takes a dict like: { "a":{"x":1, "y":2}, "b":{"x":2, "y":3} }
 def tryToUpdateAll(entityKeyDict):
     if type(entityKeyDict) != type(dict({})):
         return False

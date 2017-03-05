@@ -112,7 +112,7 @@ def update(entity):
 def get_entity(entity):
     '''This is the GET version of the entity interface, return a representation of the entity'''
     entityJsonString = str(json.dumps(myWorld.get(entity)))
-    print entityJsonString
+    # print entityJsonString
     response = Response(response=entityJsonString, mimetype="application/json")
     return response
 

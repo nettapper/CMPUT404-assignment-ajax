@@ -6,7 +6,7 @@
     <meta content='width=device-width; height=device-height; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <meta name="license" content="
-    Copyright 2013 Abram Hindle
+    Copyright 2013 Abram Hindle, Conner Dunn
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -60,6 +60,7 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
           console.log(xhr.response);
           //XXX: parse some JSON from the request!
           //XXX: Pass the data to the callback!
+          callback(JSON.parse(xhr.response));
         }
       }
       catch(e) {
@@ -70,9 +71,9 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
   //XXX: POST to a URL
   xhr.open("POST", url);
   //XXX: set the mimetype and the accept headers!
-  xhr.setRequestHeader("Content-Type", "application/json");
   // Remember to use application/json !
-  xhr.send();
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify(objects));
 }
 
 
@@ -161,7 +162,9 @@ function addEntity(entity, data) {
   world[entity] = data;
   drawNextFrame(); // (but should we?)
   //XXX: Send a XHTML Request that updates the entity you just  modified!
-
+  sendJSONXMLHTTPRequest("http://"+host+"/entity/"+entity, data, function(jsonData) {
+    //XXX: TODO what should I do with the callback?
+  });
 }
 
 var counter = 0;
@@ -285,8 +288,9 @@ mouse.mousedraggers.push(function(x,y,clicked,e) {
 
 function update() {
   //XXX: TODO Get the world from the webservice using a XMLHTTPRequest
-  getJsonFromServer("http://127.0.0.1:5000/world", function(jsonData) {
-    // TODO: do something with the world data from the server
+  getJsonFromServer("http://"+host+"/world", function(jsonData) {
+    world = jsonData;  // TODO: do I need to do more with this?
+    drawNextFrame();
   });
   drawFrame();
 }

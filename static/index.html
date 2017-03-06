@@ -57,9 +57,8 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
     if (xhr.readyState==4) {
       try {
         if (xhr.status==200) {
-          console.log(xhr.response);
-          //XXX: parse some JSON from the request!
-          //XXX: Pass the data to the callback!
+          //X: parse some JSON from the request!
+          //X: Pass the data to the callback!
           callback(JSON.parse(xhr.response));
         }
       }
@@ -68,9 +67,9 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
       }
     }
   };
-  //XXX: POST to a URL
+  //X: POST to a URL
   xhr.open("POST", url);
-  //XXX: set the mimetype and the accept headers!
+  //X: set the mimetype and the accept headers!
   // Remember to use application/json !
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.send(JSON.stringify(objects));
@@ -79,11 +78,17 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
 
 world = {};
 
-//XXX: TODO Make this prettier!
+// I want to shift the line width by +/- a rand value while still keeping the lineWidth between 2 and 12 inclusive
+function randomLineWidth() {
+  return Math.random() * 1.5 + 15;
+}
+
+//X: TODO Make this prettier!
 function drawCircle(context,entity) {
   with(context) {
     beginPath();
-    lineWidth = 3;
+    // the random lineWidth will cause a pulsing kind of pattern
+    lineWidth = randomLineWidth();
     var x = entity["x"];
     var y = entity["y"];
     //moveTo(x,y);
@@ -161,9 +166,10 @@ function getPosition(e) {
 function addEntity(entity, data) {
   world[entity] = data;
   drawNextFrame(); // (but should we?)
-  //XXX: Send a XHTML Request that updates the entity you just  modified!
+  //X: Send a XHTML Request that updates the entity you just  modified!
   sendJSONXMLHTTPRequest("http://"+host+"/entity/"+entity, data, function(jsonData) {
-    //XXX: TODO what should I do with the callback?
+    //X: TODO what should I do with the callback?
+    // For now I'll just ignore it
   });
 }
 
@@ -270,24 +276,34 @@ mouse = (function() {
   return self;
 })();
 
+function randomRGBString() {
+  v1 = Math.floor(Math.random() * 255);
+  v2 = Math.floor(Math.random() * 255);
+  v3 = Math.floor(Math.random() * 255);
+  return 'rgb('+ v1 +',' + v2 + ',' + v3 + ')'
+}
+
+function randomRadius() {
+  return Math.random() * 45 + 5; // between [50, 5]
+}
+
 // Add the application specific mouse listeners!
-//XXX: TODO Make these prettier!
+//X: TODO Make these prettier!
 mouse.mousedowners.push(function(x,y,clicked,e) {
-  addEntityWithoutName({'x':x,'y':y,'colour':'blue'});
+  addEntityWithoutName({'x':x,'y':y,'colour':'blue','radius':randomRadius()});
 });
 
 mouse.mouseuppers.push(function(x,y,clicked,e) {
-  addEntityWithoutName({'x':x,'y':y,'colour':'red'});
+  addEntityWithoutName({'x':x,'y':y,'colour':'red','radius':randomRadius()});
 });
 
 mouse.mousedraggers.push(function(x,y,clicked,e) {
-  addEntityWithoutName({'x':x,'y':y,'colour':'green',
-    'radius':10});
+  addEntityWithoutName({'x':x,'y': y,'colour':randomRGBString(),'radius':10});
 });
 
 
 function update() {
-  //XXX: TODO Get the world from the webservice using a XMLHTTPRequest
+  //X: TODO Get the world from the webservice using a XMLHTTPRequest
   getJsonFromServer("http://"+host+"/world", function(jsonData) {
     world = jsonData;  // TODO: do I need to do more with this?
     drawNextFrame();

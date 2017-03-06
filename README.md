@@ -21,3 +21,4 @@ Resources Used
 - [Flask API - Response](http://flask.pocoo.org/docs/0.12/api/#view-function-options), accessed Mar 2, 2017.
 - [MDN XMLHttpRequest.open()](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/open), accessed Mar 5, 2017.
 - [MDN HTMLCanvasElement.getContext()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext), accessed Mar 5, 2017.
+- [MDN Math.Random](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) because I'm not good at design but I can program randomness, accessed Mar 5, 2017.
